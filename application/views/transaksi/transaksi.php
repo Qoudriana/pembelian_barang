@@ -31,7 +31,7 @@
                         <!-- form start -->
 
                         <div class="card-body">
-                            <form class="form-horizontal" action="<?= base_url('transaksi') ?>" method="post">
+                            <!-- <form class="form-horizontal" action="<?= base_url('transaksi') ?>" method="post">
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal</label>
                                     <div class="col-sm-10">
@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <button id="search" type="submit" name="cari" class="btn btn-warning">Cari</button>
-                            </form>
+                            </form> -->
                             <div class="form-group">
                                 <table id="table" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
@@ -58,7 +58,11 @@
                                             <th>No Pembelian</th>
                                             <th>Tanggal</th>
                                             <th>Supplier</th>
-                                            <th>Aksi</th>
+                                            <th>User</th>
+                                            <th>Barang</th>
+                                            <th>Qty</th>
+                                            <th>Harga</th>
+                                            <th>Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -70,11 +74,19 @@
                                                 <td><?php echo $row->no_pembelian; ?></td>
                                                 <td><?php echo $row->tgl; ?></td>
                                                 <td><?php echo $row->supplier ?></td>
-                                                <td><a href="<?php echo base_url('transaksi/form_edit/' . $row->no_pembelian) ?>"><i class="fas fa-pen-square" style="color:limegreen"></i></a>&nbsp;|&nbsp;<a href="<?php echo base_url('admin/hapus/' . $row->no_pembelian) ?>" id="hapus"><i class="fas fa-trash-alt" style="color:red"></i></a></td>
+                                                <td><?php echo $row->user ?></td>
+                                                <td><?php echo $row->barang ?></td>
+                                                <td><?php echo $row->qty ?></td>
+                                                <td><?php echo $row->harga ?></td>
+                                                <td><?php echo $row->total ?></td>
                                             </tr>
 
                                         <?php endforeach; ?>
                                     </tbody>
+                                    <tfoot>
+                                        <td colspan="7"><b>Sub Total</b></td>
+                                        <td id="subtotal"><?= $sum->total ?></td>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
