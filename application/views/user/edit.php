@@ -27,7 +27,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <?php foreach ($user as $row) : ?>
+                        <?php foreach ($users as $row) : ?>
                             <form method="post" id="myform" action="<?php echo base_url('user/edit_user') ?>">
 
                                 <div class="row mt-2 ml-3">

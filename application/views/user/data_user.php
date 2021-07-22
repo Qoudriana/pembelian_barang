@@ -21,7 +21,8 @@
         <section class="content">
             <div class="flash-data" id="flash-data" name="flash-data" data-flash="<?= $this->session->flashdata('msg') ?>"></div>
             <div class="flash" id="flash" name="flash" data-flash="<?= $this->session->flashdata('ubah') ?>"></div>
-
+            <div class="flash-data" id="flash-data" name="flash-data" data-flash="<?= $this->session->flashdata('aktivasi') ?>"></div>
+            <?= $this->session->flashdata('pesan'); ?>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
@@ -40,6 +41,7 @@
                                             <th>Username</th>
                                             <th>Email</th>
                                             <th>Role</th>
+                                            <th>Foto</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -55,6 +57,7 @@
                                                     <td><?= $row->username ?></td>
                                                     <td><?= $row->email ?></td>
                                                     <td><?= $row->role ?></td>
+                                                    <td><img src="<?= base_url('assets/img/' . $row->foto) ?>" alt="" width="50px" height="50px"></td>
                                                     <td>
                                                         <a href="<?= base_url('user/toggle/' . $row->id_user) ?>" class="btn btn-circle btn-sm <?= $row->status ? 'btn-secondary' : 'btn-success' ?>" title="<?= $row->status ? 'Nonaktifkan User' : 'Aktifkan User' ?>"><i class="fa fa-fw fa-power-off"></i></a>
                                                         <a href="<?php echo base_url('user/form_edit/' . $row->id_user) ?>" class="btn btn-circle btn-sm btn-warning"><i class="fa fa-fw fa-edit"></i></a>

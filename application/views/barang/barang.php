@@ -22,6 +22,7 @@
         <section class="content">
             <div class="flash-data" id="flash-data" name="flash-data" data-flash="<?= $this->session->flashdata('msg') ?>"></div>
             <div class="flash" id="flash" name="flash" data-flash="<?= $this->session->flashdata('ubah') ?>"></div>
+            <div class="flash" id="flash" name="flash" data-flash="<?= $this->session->flashdata('hapus') ?>"></div>
 
             <div class="container-fluid">
                 <div class="row">
@@ -39,6 +40,8 @@
                                             <th>No</th>
                                             <th>Supplier</th>
                                             <th>Barang</th>
+                                            <th>Jenis</th>
+                                            <th>Satuan</th>
                                             <th>Stok</th>
                                             <th>Harga Satuan</th>
                                             <th>Aksi</th>
@@ -51,18 +54,36 @@
 
                                             <tr>
                                                 <td><?php echo $n++; ?></td>
+
                                                 <?php foreach ($supplier as $key => $sup) : ?>
                                                     <?php if ($sup->id_supplier == $row->id_supplier) : ?>
                                                         <td><?= $sup->supplier ?></td>
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
+
                                                 <td><?php echo $row->nama_barang; ?></td>
+
+                                                <?php foreach ($jenis as $key => $jen) : ?>
+                                                    <?php if ($jen->id_jenis == $row->id_jenis) : ?>
+                                                        <td><?= $jen->jenis ?></td>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+
+                                                <?php foreach ($satuan as $key => $sat) : ?>
+                                                    <?php if ($sat->id_satuan == $row->id_satuan) : ?>
+                                                        <td><?= $sat->satuan ?></td>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+
                                                 <td><?php echo $row->stok; ?></td>
-                                                <td><?php echo $row->harga_satuan ?></td>
+
+                                                <td align="right"><?php echo 'Rp ' . number_format($row->harga_satuan, 0, '.', '.') ?></td>
                                                 <td>
-                                                    <a data-toggle="modal" data-target="#editmodal<?= $row->id_barang ?>"><i class="fas fa-pen-square" style="color:limegreen"></i></a>&nbsp;|
-                                                    <a href="<?php echo base_url('barang/hapus_barang/' . $row->id_barang) ?>" id="hapus"><i class="fas fa-trash-alt" style="color:red"></i></a></td>
+                                                    <a data-toggle="modal" data-target="#editmodal<?= $row->id_barang ?>"><i class="fas fa-pen-square" style="color:limegreen"></i></a>
+                                                    |
+                                                    <a href="<?php echo base_url('barang/hapus_barang/' . $row->id_barang) ?>" id="hapus"><i class="fas fa-trash-alt" style="color:red"></i></a>
                                                 </td>
+
                                             </tr>
 
                                         <?php endforeach; ?>
@@ -119,7 +140,37 @@
                                 </div>
 
                                 <div class="col-75" style="width: 75%;">
-                                    <input type="text" name="barang" id="barang" class="form-control form-control-sm col-sm-10" value="<?= $row->nama_barang ?>">
+                                    <input type="text" name="barang" id="barang" class="form-control form-control-sm col-sm-12" value="<?= $row->nama_barang ?>">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-25" style="width: 25%;">
+                                    <label>Jenis</label>
+                                </div>
+
+                                <div class="col-75" style="width: 75%;">
+                                    <select name="jenis" id="jenis" class="form-control form-control-sm col-sm-12">
+                                        <option value="">--Pilih Jenis--</option>
+                                        <?php foreach ($jenis as $jen) : ?>
+                                            <option value="<?= $jen->id_jenis ?>" <?= $jen->id_jenis == $row->id_jenis ? "selected" : null ?>><?= $jen->jenis ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-25" style="width: 25%;">
+                                    <label>Satuan</label>
+                                </div>
+
+                                <div class="col-75" style="width: 75%;">
+                                    <select name="satuan" id="satuan" class="form-control form-control-sm col-sm-12">
+                                        <option value="">--Pilih Satuan--</option>
+                                        <?php foreach ($satuan as $sat) : ?>
+                                            <option value="<?= $sat->id_satuan ?>" <?= $sat->id_satuan == $row->id_satuan ? "selected" : null ?>><?= $sat->satuan ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
 
@@ -129,7 +180,7 @@
                                 </div>
 
                                 <div class="col-75" style="width: 75%;">
-                                    <input type="text" name="qty" id="qty" class="form-control form-control-sm col-sm-10" value="<?= $row->stok ?>">
+                                    <input type="text" name="qty" id="qty" class="form-control form-control-sm col-sm-12" value="<?= $row->stok ?>">
                                 </div>
                             </div>
                             <br>
@@ -139,7 +190,7 @@
                                 </div>
 
                                 <div class="col-75" style="width: 75%;">
-                                    <input type="text" name="harga" id="harga" class="form-control form-control-sm col-sm-10" value="<?= $row->harga_satuan ?>">
+                                    <input type="text" style="text-align:right" name="harga" id="harga" class="form-control form-control-sm col-sm-12" value="<?php echo 'Rp. ' . number_format($row->harga_satuan, 0, '.', '.') ?>">
                                 </div>
                             </div>
                             <br>
@@ -148,8 +199,8 @@
                                     <label>Supplier</label>
                                 </div>
 
-                                <div class="col-75" style="width: 63%;">
-                                    <select name="supplier" id="supplier" class="form-control form-control-sm col-sm-10">
+                                <div class="col-75" style="width: 75%;">
+                                    <select name="supplier" id="supplier" class="form-control form-control-sm col-sm-12">
                                         <option value="">--Pilih Supplier--</option>
                                         <?php foreach ($supplier as $sup) : ?>
                                             <option value="<?= $sup->id_supplier ?>" <?= $sup->id_supplier == $row->id_supplier ? "selected" : null ?>><?= $sup->supplier ?></option>
@@ -210,7 +261,10 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Supplier</th>
                                             <th>Barang</th>
+                                            <th>Jenis</th>
+                                            <th>Satuan</th>
                                             <th>Stok</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -222,9 +276,29 @@
 
                                             <tr>
                                                 <td><?php echo $n++; ?></td>
+
+                                                <?php foreach ($supplier as $key => $sup) : ?>
+                                                    <?php if ($sup->id_supplier == $row->id_supplier) : ?>
+                                                        <td><?= $sup->supplier ?></td>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+
                                                 <td><?php echo $row->nama_barang; ?></td>
+
+                                                <?php foreach ($jenis as $key => $jen) : ?>
+                                                    <?php if ($jen->id_jenis == $row->id_jenis) : ?>
+                                                        <td><?= $jen->jenis ?></td>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+
+                                                <?php foreach ($satuan as $key => $sat) : ?>
+                                                    <?php if ($sat->id_satuan == $row->id_satuan) : ?>
+                                                        <td><?= $sat->satuan ?></td>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+
                                                 <td><?php echo $row->stok; ?></td>
-                                                <td hidden><?php echo $row->harga_satuan; ?></td>
+
                                                 <td>
                                                     <center><a data-toggle="modal" data-target="#editmodal<?= $row->id_barang ?>"><i class="fas fa-pen-square" style="color:limegreen"></i></a></center>
                                                 </td>
@@ -235,6 +309,7 @@
                                 </table>
                             </div>
                             <!-- /.card-body -->
+
                         </div>
                         <!-- /.card -->
 
@@ -284,7 +359,37 @@
                                 </div>
 
                                 <div class="col-75" style="width: 75%;">
-                                    <input type="text" name="barang" id="barang" class="form-control form-control-sm col-sm-10" value="<?= $row->nama_barang ?>" readonly>
+                                    <input type="text" name="barang" id="barang" class="form-control form-control-sm col-sm-12" value="<?= $row->nama_barang ?>" readonly>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" hidden>
+                                <div class="col-25" style="width: 25%;">
+                                    <label>Jenis</label>
+                                </div>
+
+                                <div class="col-75" style="width: 75%;">
+                                    <select name="jenis" id="jenis" class="form-control form-control-sm col-sm-12" aria-readonly="true">
+                                        <option value="">--Pilih Jenis--</option>
+                                        <?php foreach ($jenis as $jen) : ?>
+                                            <option value="<?= $jen->id_jenis ?>" <?= $jen->id_jenis == $row->id_jenis ? "selected" : null ?>><?= $jen->jenis ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" hidden>
+                                <div class="col-25" style="width: 25%;">
+                                    <label>Jenis</label>
+                                </div>
+
+                                <div class="col-75" style="width: 75%;">
+                                    <select name="satuan" id="satuan" class="form-control form-control-sm col-sm-12">
+                                        <option value="">--Pilih Satuan--</option>
+                                        <?php foreach ($satuan as $sat) : ?>
+                                            <option value="<?= $sat->id_satuan ?>" <?= $sat->id_satuan == $row->id_satuan ? "selected" : null ?>><?= $sat->satuan ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                             <br>
@@ -294,17 +399,17 @@
                                 </div>
 
                                 <div class="col-75" style="width: 75%;">
-                                    <input type="text" name="qty" id="qty" class="form-control form-control-sm col-sm-10" value="<?= $row->stok ?>">
+                                    <input type="text" name="qty" id="qty" class="form-control form-control-sm col-sm-12" value="<?= $row->stok ?>">
                                 </div>
                             </div>
-                            <br>
+
                             <div class="row" hidden>
                                 <div class="col-25" style="width: 25%;">
                                     <label>Harga Satuan</label>
                                 </div>
 
                                 <div class="col-75" style="width: 75%;">
-                                    <input type="text" name="harga" id="harga" class="form-control form-control-sm col-sm-10" value="<?= $row->harga_satuan ?>">
+                                    <input type="text" style="text-align:right" name="harga" id="harga" class="form-control form-control-sm col-sm-12" value="<?php echo 'Rp. ' . number_format($row->harga_satuan, 0, '.', '.') ?>">
                                 </div>
                             </div>
                             <br>
@@ -313,15 +418,16 @@
                                     <label>Supplier</label>
                                 </div>
 
-                                <div class="col-75" style="width: 63%;">
-                                    <select name="supplier" id="supplier" class="form-control form-control-sm col-sm-10">
+                                <div class="col-75" style="width: 75%;">
+                                    <select name="supplier" id="supplier" class="form-control form-control-sm col-sm-12">
                                         <option value="">--Pilih Supplier--</option>
-                                        <?php foreach ($supplier as $row) : ?>
-                                            <option value="<?= $row->id_supplier ?>"><?= $row->supplier ?></option>
+                                        <?php foreach ($supplier as $sup) : ?>
+                                            <option value=" <?= $sup->id_supplier ?>" <?= $sup->id_supplier == $row->id_supplier ? "selected" : null ?>><?= $sup->supplier ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
+                            <br>
                             <br>
                             <br>
                             <div class="row">
@@ -338,3 +444,30 @@
         endforeach;
         ?>
 <?php }; ?>
+<!-- <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script> -->
+<script type="text/javascript">
+    var rupiah = document.getElementById('harga');
+    rupiah.addEventListener('keyup', function(e) {
+        // tambahkan 'Rp.' pada saat form di ketik
+        // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+        rupiah.value = formatRupiah(this.value, 'Rp. ');
+    });
+
+    /* Fungsi formatRupiah */
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+</script>

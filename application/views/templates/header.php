@@ -26,7 +26,9 @@
   <!-- Toastr -->
   <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/toastr/toastr.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/adminlte.css">
+
+  <link rel="stylesheet" type="text/css" href="<?= base_url('assets/') ?>plugins/daterangepicker/daterangepicker.css" />
 
 
 </head>

@@ -39,6 +39,38 @@
                                     <?= form_error('barang', '<small class="text-danger">', '</small>'); ?>
                                 </div>
                             </div>
+                            <br>
+                            <div class="row mt-2 ml-3">
+                                <div class="col-25" style="width: 25%;">
+                                    <label>Jenis</label>
+                                </div>
+
+                                <div class="col-75" style="width: 65%;">
+                                    <select name="jenis" id="jenis" class="form-control form-control-sm col-sm-10">
+                                        <option value="">--Pilih Jenis--</option>
+                                        <?php foreach ($jenis as $row) : ?>
+                                            <option value="<?= $row->id_jenis ?>"><?= $row->jenis ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <?= form_error('jenis', '<small class="text-danger">', '</small>'); ?>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row mt-2 ml-3">
+                                <div class="col-25" style="width: 25%;">
+                                    <label>Satuan</label>
+                                </div>
+
+                                <div class="col-75" style="width: 65%;">
+                                    <select name="satuan" id="satuan" class="form-control form-control-sm col-sm-10">
+                                        <option value="">--Pilih Satuan--</option>
+                                        <?php foreach ($satuan as $row) : ?>
+                                            <option value="<?= $row->id_satuan ?>"><?= $row->satuan ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <?= form_error('satuan', '<small class="text-danger">', '</small>'); ?>
+                                </div>
+                            </div>
 
                             <div class="row mt-2 ml-3" hidden>
                                 <div class="col-25" style="width: 25%;">
@@ -56,7 +88,7 @@
                                 </div>
 
                                 <div class="col-75" style="width: 65%;">
-                                    <input type="text" name="harga" id="harga" class="form-control form-control-sm col-sm-10" value="<?= set_value('harga_satuan') ?>">
+                                    <input style="text-align:right" type="text" name="harga" id="harga" class="form-control form-control-sm col-sm-10" value="<?= set_value('harga_satuan') ?>">
                                     <?= form_error('harga', '<small class="text-danger">', '</small>'); ?>
                                 </div>
                             </div>
@@ -93,3 +125,29 @@
     </section>
     <!-- /.content -->
 </div>
+<script type="text/javascript">
+    var rupiah = document.getElementById('harga');
+    rupiah.addEventListener('keyup', function(e) {
+        // tambahkan 'Rp.' pada saat form di ketik
+        // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+        rupiah.value = formatRupiah(this.value, 'Rp. ');
+    });
+
+    /* Fungsi formatRupiah */
+    function formatRupiah(angka, prefix) {
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            sisa = split[0].length % 3,
+            rupiah = split[0].substr(0, sisa),
+            ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+</script>

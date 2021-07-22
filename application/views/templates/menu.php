@@ -17,10 +17,10 @@
                with font-awesome or any other icon font library -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="<?= base_url('assets/img/') . $user['foto']; ?>" class="img-circle elevation-2" alt="User Image">
+                            <img src="<?= base_url('assets/img/') . $user['foto']; ?>" class="img-circle elevation-2" alt="User Image" style="width : 50px; height :50px">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block"><?= $user['name'] ?></a>
+                            <a href="<?= base_url('profile') ?>" class="d-block"><?= $user['name'] ?></a>
                         </div>
                     </div>
 
@@ -43,14 +43,34 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="<?= base_url('barang') ?>" class="nav-link">
-                            <i class="nav-icon fas fa-folder-open"></i>
+                        <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-folder-open"></i>
                             <p>
                                 Barang
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="<?= base_url('barang') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Data Barang</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('satuan/jenis') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Jenis</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="<?= base_url('satuan') ?>" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Satuan</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-
                     <li class="nav-header">TRANSAKSI</li>
                     <li class="nav-item">
                         <a href="<?= base_url('pesanan') ?>" class="nav-link">
@@ -105,10 +125,10 @@
                with font-awesome or any other icon font library -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="<?= base_url('assets/img/') . $user['foto']; ?>" class="img-circle elevation-2" alt="User Image">
+                            <img src="<?= base_url('assets/img/') . $user['foto']; ?>" class="img-circle elevation-2" alt="User Image" style="width : 50px; height :50px">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block"><?= $user['name'] ?></a>
+                            <a href="<?= base_url('profile') ?>" class="d-block"><?= $user['name'] ?></a>
                         </div>
                     </div>
 

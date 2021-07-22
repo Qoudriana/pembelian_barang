@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="<?= base_url('assets/') ?>plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url('assets/') ?>dist/css/adminlte.min.css">
+    <!-- Date Range Picker -->
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/') ?>plugins/date-range-picker/daterangepicker.css" />
 </head>
 
 <body class="hold-transition login-page">

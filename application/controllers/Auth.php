@@ -25,6 +25,7 @@ class Auth extends CI_Controller
         } else {
             $this->_login();
         }
+        unset($_SESSION['message']);
     }
 
     private function _login()
@@ -76,7 +77,7 @@ class Auth extends CI_Controller
         $this->form_validation->set_rules('username', 'Username', 'required|trim', [
             'required' => 'Username Harus Diisi'
         ]);
-        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]', [
+        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[5]|matches[password2]', [
             'required' => 'Password Harus Diisi',
             'matches' => 'Password Tidak Sama',
             'min_length' => 'Password Telalu Pendek'
@@ -96,7 +97,7 @@ class Auth extends CI_Controller
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'created_at' => time(),
                 'status' => 0,
-                'foto' =>'default.jpg'
+                'foto' => 'default.jpg'
             ];
 
             $this->db->insert('user', $data);
@@ -108,7 +109,7 @@ class Auth extends CI_Controller
 
     public function logout()
     {
-        $this->session->unset_userdata('email');
+        $this->session->unset_userdata('username');
         $this->session->unset_userdata('role');
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda Telah Log Out</div>');
         redirect('auth');

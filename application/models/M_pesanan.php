@@ -19,6 +19,7 @@ class M_pesanan extends CI_Model
         date_default_timezone_set('Asia/Jakarta');
         return date('dmy') . $kd;
     }
+
     public function get_Supplier()
     {
         $query = $this->db->get('supplier');
@@ -41,7 +42,7 @@ class M_pesanan extends CI_Model
     public function getTampilBarang($x)
     {
         // $query = $this->db->get_where('barang', array('id_supplier' => $x));
-        $sql = "select * from barang where id_supplier='$x'";
+        $sql = "select barang.id_barang, barang.nama_barang, jenis.jenis from barang inner join jenis on barang.id_jenis = jenis.id_jenis where id_supplier='$x'";
         $query = $this->db->query($sql);
         return $query->result();
     }
@@ -69,13 +70,13 @@ class M_pesanan extends CI_Model
     {
 
         foreach ($data as  $dt) {
-
+            $id_detail = $dt['id_detail'];
             $idpembelian = $dt['idpembelian'];
             $idbarang = $dt['idbarang'];
             $qty = $dt['qty'];
             $harga = $dt['harga'];
 
-            $this->db->query("insert into detail values ('$idpembelian', '$idbarang', '$qty', '$harga')");
+            $this->db->query("insert into detail values ('$id_detail','$idpembelian', '$idbarang', '$qty', '$harga')");
         }
 
         return true;

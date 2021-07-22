@@ -38,6 +38,13 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <form>
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group" hidden>
+                                        <label>ID</label>
+                                        <input type="text" id="id_detail" name="id_detail" style="width:300px" class="form-control">
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <!-- text input -->
@@ -94,8 +101,8 @@
                                             </td>
                                             <td width="15%" style="display:none;"><input type="text" id="nama_barang" class="form-control"></td>
                                             <td width="15%"><input type="text" id="qty" class="form-control"></td>
-                                            <td width="15%"><input type="text" id="harga" class="form-control"></td>
-                                            <td width="15%"><input type="text" id="total" class="form-control"></td>
+                                            <td width="15%"><input type="text" id="harga" class="form-control" style="text-align:right"></td>
+                                            <td width="15%"><input type="text" id="total" class="form-control" style="text-align:right"></td>
                                             <td width="15%" align="center"><input class="btn btn-success" type="button" value="Tambah" id="insert">
                                                 <input class="btn btn-danger" type="button" value="Hapus" id="delete-row">
                                             </td>
@@ -103,9 +110,12 @@
                                         </tr>
                                     </table>
                                     <table id="example" class="table table-bordered" style="width:100%" align=center>
+                                        <tbody></tbody>
                                         <tfoot>
-                                            <td colspan="3"> <b>Total Harga</b></td>
-                                            <td width="15%"><input type="text" id="ttlharga" class="form-control"></td>
+                                            <tr>
+                                                <td colspan="3"> <b>Total Bayar</b></td>
+                                                <td width="15%"><input type="text" id="ttlbayar" class="form-control" readonly style="text-align:right"></td>
+                                            </tr>
                                         </tfoot>
                                     </table>
                                 </div>

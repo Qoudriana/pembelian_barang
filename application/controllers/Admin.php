@@ -7,6 +7,7 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        is_logged_in();
     }
 
 
@@ -22,6 +23,9 @@ class Admin extends CI_Controller
         $this->load->view('templates/menu', $data);
         $this->load->view('dahsboard', $data);
         $this->load->view('templates/footer');
+        unset($_SESSION['msg'],
+        $_SESSION['ubah'],
+        $_SESSION['hapus']);
     }
 
 
@@ -35,6 +39,9 @@ class Admin extends CI_Controller
         $this->load->view('templates/menu', $data);
         $this->load->view('admin/supplier', $data);
         $this->load->view('templates/footer');
+        unset($_SESSION['msg'],
+        $_SESSION['ubah'],
+        $_SESSION['hapus']);
     }
 
     public function form_supplier()
@@ -61,10 +68,11 @@ class Admin extends CI_Controller
             'required' => 'Alamat harus diisi'
         ]);
         if ($this->form_validation->run() == false) {
+            $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $data['title'] = "Form Tambah Supplier";
             $this->load->view('templates/header', $data);
-            $this->load->view('templates/menu');
-            $this->load->view('admin/form_supplier');
+            $this->load->view('templates/menu', $data);
+            $this->load->view('admin/form_supplier', $data);
             $this->load->view('templates/footer');
         } else {
             $data = [
@@ -83,6 +91,7 @@ class Admin extends CI_Controller
     {
         $r = array('id_supplier' => $id);
         $this->m_admin->hapus_supplier($r, 'supplier');
+        $this->session->set_flashdata('hapus', 'Data Berhasil Dihapus');
         redirect('admin/supplier');
     }
 

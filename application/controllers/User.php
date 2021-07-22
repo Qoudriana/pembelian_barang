@@ -7,6 +7,7 @@ class User extends CI_Controller
     {
         parent::__construct();
         $this->load->library('form_validation');
+        is_logged_in();
     }
 
     public function index()
@@ -19,6 +20,10 @@ class User extends CI_Controller
         $this->load->view('templates/menu', $data);
         $this->load->view('user/data_user', $data);
         $this->load->view('templates/footer');
+        unset($_SESSION['msg'],
+        $_SESSION['ubah'],
+        $_SESSION['hapus'],
+        $_SESSION['aktivasi']);
     }
 
     public function form_user()
@@ -41,15 +46,21 @@ class User extends CI_Controller
             'required' => 'Email Harus Diisi',
             'is_unique' => 'Email Sudah Pernah Digunakan'
         ]);
-        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]', [
+        $this->form_validation->set_rules('username', 'Username', 'required|trim', [
+            'required' => 'Email Harus Diisi',
+            'is_unique' => 'Email Sudah Pernah Digunakan'
+        ]);
+        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[5]|matches[password2]', [
             'required' => 'Password Harus Diisi',
             'matches' => 'Password Tidak Sama',
             'min_length' => 'Password Telalu Pendek'
         ]);
+
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
         if ($this->form_validation->run() == false) {
+            $data['user'] = $this->db->get_where('user', ['username' => $this->session->userdata('username')])->row_array();
             $data['title'] = "Tambah User";
-            $this->load->view('templates/header');
+            $this->load->view('templates/header', $data);
             $this->load->view('templates/topbar');
             $this->load->view('templates/menu', $data);
             $this->load->view('user/tambah', $data);
@@ -61,7 +72,8 @@ class User extends CI_Controller
                 'email' => htmlspecialchars($this->input->post('email', true)),
                 'role' => htmlspecialchars($this->input->post('role', true)),
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-                'created_at' => time($this->input->post('tgl', true)),
+                'created_at' => time(),
+                'foto' => 'default.jpg',
 
             ];
 
@@ -78,7 +90,7 @@ class User extends CI_Controller
         $i = array(
             'id_user' => $id
         );
-        $data['user'] = $this->m_admin->edit_user($i, 'user')->result();
+        $data['users'] = $this->m_admin->edit_user($i, 'user')->result();
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar');
         $this->load->view('templates/menu', $data);
@@ -104,6 +116,7 @@ class User extends CI_Controller
     {
         $r = array('id_user' => $id);
         $this->m_admin->hapus_user($r, 'user');
+        $this->session->set_flashdata('hapus', 'terhapus');;
         redirect('user');
     }
 
@@ -115,8 +128,13 @@ class User extends CI_Controller
         $pesan = $toggle ? 'user diaktifkan.' : 'user dinonaktifkan.';
 
         if ($this->m_admin->ubah_user($x, ['status' => $toggle], 'user')) {
-            set_pesan($pesan);
+            $this->session->set_flashdata('msg', $pesan);
         }
+        unset($_SESSION['msg'],
+        $_SESSION['ubah'],
+        $_SESSION['hapus'],
+        $_SESSION['aktivasi']);
+        $this->session->set_flashdata('aktivasi', $pesan);
         redirect('user');
     }
 }

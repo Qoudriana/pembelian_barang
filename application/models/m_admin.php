@@ -21,6 +21,18 @@ class m_admin extends CI_Model
         $query = $this->db->get('user');
         return $query->result();
     }
+
+    public function satuan()
+    {
+        $query = $this->db->get('satuan');
+        return $query->result();
+    }
+
+    public function jenis()
+    {
+        $query = $this->db->get('jenis');
+        return $query->result();
+    }
     // END GET DATA
 
 
@@ -31,6 +43,16 @@ class m_admin extends CI_Model
     }
 
     public function insert_barang($data, $table)
+    {
+        $this->db->insert($table, $data);
+    }
+
+    public function insert_satuan($data, $table)
+    {
+        $this->db->insert($table, $data);
+    }
+
+    public function insert_jenis($data, $table)
     {
         $this->db->insert($table, $data);
     }
@@ -55,6 +77,24 @@ class m_admin extends CI_Model
         $this->db->where($r);
         $this->db->delete($table);
     }
+
+    public function hapus_satuan($r, $table)
+    {
+        $this->db->where($r);
+        $this->db->delete($table);
+    }
+
+    public function hapus_jenis($r, $table)
+    {
+        $this->db->where($r);
+        $this->db->delete($table);
+    }
+    
+    public function hapus_transaksi($r, $table)
+    {
+        $this->db->where($r);
+        $this->db->delete($table);
+    }
     // END DELETE DATA
 
 
@@ -74,6 +114,8 @@ class m_admin extends CI_Model
     {
         return $this->db->get_where($table, $i);
     }
+
+
     // END GET EDIT DATA
 
 
@@ -92,6 +134,18 @@ class m_admin extends CI_Model
     }
 
     public function ubah_barang($where, $data, $table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
+
+    public function ubah_satuan($where, $data, $table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
+
+    public function ubah_jenis($where, $data, $table)
     {
         $this->db->where($where);
         $this->db->update($table, $data);
@@ -136,5 +190,24 @@ class m_admin extends CI_Model
         } else {
             return 0;
         }
+    }
+
+    // Ubah Password
+    public function simpan_password()
+    {
+        $pass = md5($this->input->post('psw_baru'));
+        $data = array(
+            'password' => $pass
+        );
+        $this->db->where('id_user', $this->session->userdata('id_user'));
+        $this->db->update('user', $data);
+    }
+    // fungsi untuk mengecek password lama :
+    public function psw_lama()
+    {
+        $old = md5($this->input->post('psw_lama'));
+        $this->db->where('password', $old);
+        $query = $this->db->get('user');
+        return $query->result();;
     }
 }

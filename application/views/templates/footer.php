@@ -1,4 +1,6 @@
 <footer class="main-footer">
+
+
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
@@ -12,7 +14,6 @@
 
 <!-- jQuery -->
 <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
-
 <!-- Bootstrap -->
 <script src="<?= base_url('assets/') ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url('assets/') ?>plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -53,14 +54,20 @@
 <script src="<?= base_url('assets/') ?>dist/js/dtTable.js"></script>
 <!-- Date Range Picker -->
 <script type="text/javascript" src="<?= base_url('assets/') ?>plugins/date-range-picker/moment.min.js"></script>
-<script type="text/javascript" src="<?= base_url('assets/') ?>plugins/date-range-picker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<?= base_url('assets/') ?>plugins/date-range-picker/daterangepicker.css" />
+<script type="text/javascript" src="<?= base_url('assets/') ?>plugins/daterangepicker/daterangepicker.js"></script>
+
+
+
 <!-- MyJS -->
 <script src="<?= base_url('assets/') ?>myJS.js"></script>
 
 
 <!-- AdminLTE App -->
 <script>
+    // Select2
+
+    $('#filter').select2({})
+
     // ALERT SIMPAN
     var flash = $('#flash-data').data('flash');
     if (flash) {
@@ -72,11 +79,32 @@
         })
     }
 
+    var flash = $('#sukses').data('sukses');
+    if (flash) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Password Telah Diubah !',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
     var flash = $('#data').data('data');
     if (flash) {
         Swal.fire({
             icon: 'success',
             title: 'Pesanan Berhasil Dibuat :)',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+
+    // Aktivasi
+    var flash = $('#aktivasi').data('aktivasi');
+    if (flash) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Teraktivasi',
             showConfirmButton: false,
             timer: 1500
         })
@@ -137,110 +165,8 @@
             }
         })
     })
-
-    $(document).ready(function() {
-        var table = $('#table').DataTable({
-            buttons: ['copy', 'csv', 'print', 'excel', 'pdf'],
-            dom: "<'row px-2 px-md-4 pt-2'<'col-md-3'l><'col-md-5 text-center'B><'col-md-4'f>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'row px-2 px-md-4 py-3'<'col-md-5'i><'col-md-7'p>>",
-            lengthMenu: [
-                [5, 10, 25, 50, 100, -1],
-                [5, 10, 25, 50, 100, "All"]
-            ],
-            columnDefs: [{
-                targets: -1,
-                orderable: false,
-                searchable: false,
-                autoWidth: false,
-                responsive: true,
-            }]
-        });
-
-        table.buttons().container().appendTo('#dataTable_wrapper .col-md-5:eq(0)');
-    });
-
-    // $(document).ready(function() {
-    //     $('#filter').select2({
-    //         placeholder: 'Pilih Supplier',
-    //         allowClear: true
-
-    //     });
-
-    //     var t = $('#dataTable').DataTable({
-    //         // "processing": true,
-    //         "serveSide": true,
-    //         "ordering": true,
-    //         "columnDefs": [{
-    //             "searchable": false,
-    //             "orderable": false,
-    //             "targets": 0
-    //         }],
-    //         "order": [
-    //             [1, 'asc']
-    //         ],
-    //         "ajax": {
-    //             "url": "transaksi/view",
-    //             "type": "POST"
-    //         },
-    //         "deferRender": true,
-    //         "aLengthMenu": [
-    //             [10, 20, 30],
-    //             [10, 20, 30]
-    //         ],
-    //         "columns": [{
-    //                 "render": function(data, type, row) {
-    //                     return "number";
-    //                 }
-    //             },
-    //             {
-    //                 "data": "no_pembelian"
-    //             },
-    //             {
-    //                 "data": "tgl"
-    //             },
-    //             {
-    //                 "data": "user"
-    //             },
-
-    //             {
-    //                 "data": "supplier"
-    //             },
-    //             {
-    //                 "data": "barang"
-    //             },
-    //             {
-    //                 "data": "qty"
-    //             },
-    //             {
-    //                 "data": "harga"
-    //             },
-    //             {
-    //                 "data": "total"
-    //             },
-    //         ]
-    //     });
-    //     t.on('draw.dt', function() {
-    //         var PageInfo = $('#dataTable').DataTable().page.info();
-    //         t.column(0, {
-    //             page: 'current'
-    //         }).nodes().each(function(cell, i) {
-    //             cell.innerHTML = i + 1 + PageInfo.start;
-    //         });
-    //     });
-
-    //     $('#search').on('click', function() {
-
-    //         var keyword = $('#keyword').val();
-    //         var filter = $('#filter').val();
-
-    //         t.search(keyword + " " + filter).draw();
-    //     })
-    //     $(".dataTables_filter").css('display', 'none');
-    // });
 </script>
-
-<script type="text/javascript">
+<script>
     $(function() {
 
         var start = moment().subtract(29, 'days');
@@ -267,6 +193,7 @@
 
     });
 </script>
+
 </body>
 
 </html>

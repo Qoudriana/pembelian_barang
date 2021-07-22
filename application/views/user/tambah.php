@@ -68,7 +68,7 @@
                                 </div>
 
                                 <div class="col-75" style="width: 65%;">
-                                    <input type="text" name="password1" id="password1" class="form-control form-control-sm col-sm-10" value="<?= set_value('password1') ?>">
+                                    <input type="password" name="password1" id="password1" class="form-control form-control-sm col-sm-10" value="<?= set_value('password1') ?>">
                                     <?= form_error('password1', '<small class="text-danger">', '</small>'); ?>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                                 </div>
 
                                 <div class="col-75" style="width: 65%;">
-                                    <input type="text" name="password2" id="password2" class="form-control form-control-sm col-sm-10">
+                                    <input type="password" name="password2" id="password2" class="form-control form-control-sm col-sm-10">
                                 </div>
                             </div>
                             <br>
